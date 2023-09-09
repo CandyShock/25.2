@@ -18,7 +18,11 @@ class LessonSerialaizer(serializers.ModelSerializer):
 
 class CurseSerialaizer(serializers.ModelSerializer):
     """Выводит уроки привязанные к данному курсу по id"""
-    lesson = LessonSerialaizer(source='lesson_set', many=True)
+    lesson = LessonSerialaizer(many=True)
+    lesson_count = serializers.SerializerMethodField()
+
+    def get_lesson_count(self, obj):
+        return obj.lesson.count()
 
     class Meta:
         model = Curse

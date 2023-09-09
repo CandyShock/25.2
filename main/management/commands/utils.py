@@ -7,9 +7,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         data = [
             {
-                "curse": 1,
                 "user": "Mad",
-                "pay_day": "2023-03-2",
+                "pay_day": "2022-03-02",
                 "pay_check": "True",
                 "pay_summ": 333,
                 "pay_way": "карта"
