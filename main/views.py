@@ -29,7 +29,7 @@ class LessonListAPIView(generics.ListAPIView):
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     """Смотреть детализацию может только владелец или модер"""
-    """Если материал не является публичным, просматривать его может только владелец"""
+    """Если материал не является публичным, просматривать его может только владелец, либо модер"""
     serializer_class = LessonSerialaizer
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated, IsModer | IsOwner | IsPublic]
