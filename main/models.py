@@ -1,10 +1,15 @@
+from django.conf import settings
 from django.db import models
+
+from users.models import NULLABLE
 
 
 class Curse(models.Model):
     title = models.CharField(max_length=50, verbose_name='название')
     preview = models.ImageField(upload_to='curse/', verbose_name='картинка', null=True, blank=True)
     description = models.CharField(max_length=100, verbose_name='описание')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.title} {self.description}"
@@ -19,8 +24,10 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to='lesson/', verbose_name='картинка', null=True, blank=True)
     description = models.CharField(max_length=100, verbose_name='описание')
     url = models.URLField(max_length=50, verbose_name='ссылка на видео')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    is_public = models.BooleanField(default=False)
 
-    curse = models.ForeignKey(Curse, on_delete=models.CASCADE, null=True, blank=True, related_name='lesson')
+    curse = models.ForeignKey(Curse, on_delete=models.CASCADE, related_name='lesson', **NULLABLE)
 
     def __str__(self):
         return f"{self.title} {self.description} {self.url}"
