@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from users.models import NULLABLE
+NULLABLE = {'blank': True, 'null': True}
 
 
 class Curse(models.Model):
@@ -53,3 +53,11 @@ class Payments(models.Model):
     class Meta:
         verbose_name = 'оплата'
         verbose_name_plural = 'оплаты'
+
+
+class subscription(models.Model):
+    """подписка привязана к владельцу, отображается как и уроки списком в листе курсов под меткой sub_stat"""
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    sub_name = models.CharField(max_length=25, verbose_name='название подписки', **NULLABLE)
+    sub_curse = models.ForeignKey(Curse, on_delete=models.CASCADE, related_name='sub_stat', **NULLABLE)
+    sub_status = models.BooleanField(default=True, verbose_name='признак подписки')
