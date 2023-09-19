@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, generics
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from main.models import Curse, Lesson, Payments, subscription
 from main.paginators import LessonAndCursePagination
@@ -19,7 +19,7 @@ class CurseViewSet(viewsets.ModelViewSet):
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerialaizer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class LessonListAPIView(generics.ListAPIView):
@@ -70,9 +70,8 @@ class SubListAPIView(generics.ListAPIView):
 
 
 class SubCreateAPIView(generics.CreateAPIView):
-    """создавать новые типы подписок может только модер"""
     serializer_class = SubSerialaizer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class SubRetrieveAPIView(generics.RetrieveAPIView):
